@@ -46,13 +46,10 @@
     "lint": "aegir lint",
     "dep-check": "aegir dep-check",
     "build": "aegir build",
-    "test": "aegir test",
+    "test": "npm run test:chrome",
     "test:chrome": "aegir test -t browser --cov",
-    "test:chrome-webworker": "aegir test -t webworker",
     "test:firefox": "aegir test -t browser -- --browser firefox",
-    "test:firefox-webworker": "aegir test -t webworker -- --browser firefox",
-    "test:node": "aegir test -t node --cov",
-    "test:electron-main": "aegir test -t electron-main",
+    "test:electron-renderer": "aegir test -t electron-renderer",
     "prepublishOnly": "node scripts/update-version.js && npm run build"
   },
   "dependencies": {
@@ -60,8 +57,15 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.0.1",
+    "@types/react": "^18.3.12",
     "aegir": "^44.0.1",
-    "helia": "^5.1.0"
+    "helia": "^5.1.0",
+    "p-defer": "^4.0.1"
+  },
+  "peerDependencies": {
+    "helia": "^5.1.0",
+    "react": ">=18.0.0"
   },
   "sideEffects": false
 }
