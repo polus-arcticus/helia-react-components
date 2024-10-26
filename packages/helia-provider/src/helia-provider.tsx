@@ -1,4 +1,5 @@
 import { createHelia, type Helia } from 'helia'
+import { type Libp2p } from 'libp2p'
 import React, { createContext, useEffect, useState, type ReactNode } from 'react'
 
 interface HeliaContextProps {
@@ -6,15 +7,20 @@ interface HeliaContextProps {
 }
 
 const HeliaContext = createContext<HeliaContextProps | undefined>(undefined)
-
-const HeliaProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+// make libp2p an optional parameter 
+const HeliaProvider: React.FC<{ children: ReactNode, libp2p?: Libp2p }> = ({ children, libp2p }) => {
   const [heliaInstance, setHeliaInstance] = useState<Helia | null>(null)
   useEffect(() => {
     void (async () => {
       if (heliaInstance != null) {
         return
       }
-      const helia = await createHelia()
+      let helia;
+      if (libp2p == null) {
+        helia = await createHelia()
+      } else {
+        helia = await createHelia({ libp2p })
+      }
       setHeliaInstance(helia)
     })()
 
