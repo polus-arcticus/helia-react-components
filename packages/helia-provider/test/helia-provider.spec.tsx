@@ -5,8 +5,9 @@ import { expect } from 'aegir/chai'
 import pDefer from 'p-defer'
 import { useEffect } from 'react'
 import { HeliaProvider, useHelia } from '../src/helia-provider.js'
-import type { Helia } from 'helia'
 import { exampleLibp2p } from './sampleLibp2pConfig.js'
+import type { Helia } from 'helia'
+
 describe('HeliaProvider', () => {
   it('should render without crashing', () => {
     render(<HeliaProvider data-testid='helia-provider'><div data-testid='helia-provider-child' /></HeliaProvider>)
@@ -14,7 +15,7 @@ describe('HeliaProvider', () => {
     expect(element).to.exist()
   })
 
-  it("a custom libp2p instance can be provided", async () => {
+  it('a custom libp2p instance can be provided', async () => {
     render(<HeliaProvider data-testid='helia-provider' libp2p={exampleLibp2p}><div data-testid='helia-provider-child' /></HeliaProvider>)
     const element = screen.getByTestId('helia-provider-child') // Assuming you have a data-testid="helia-provider" in your component
     expect(element).to.exist()
