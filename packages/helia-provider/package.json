@@ -49,7 +49,6 @@
     "test": "npm run test:chrome",
     "test:chrome": "aegir test -t browser --cov",
     "test:firefox": "aegir test -t browser -- --browser firefox",
-    "test:electron-renderer": "aegir test -t electron-renderer",
     "prepublishOnly": "node scripts/update-version.js && npm run build"
   },
   "dependencies": {
