@@ -49,11 +49,10 @@
     "test": "npm run test:chrome",
     "test:chrome": "aegir test -t browser --cov",
     "test:firefox": "aegir test -t browser -- --browser firefox",
-    "test:electron-renderer": "aegir test -t electron-renderer",
     "prepublishOnly": "node scripts/update-version.js && npm run build"
   },
   "dependencies": {
-    "react": "^18.3.1",
+    "react": ">=18.0.0",
     "react-dom": "^18.3.1",
     "@chainsafe/libp2p-gossipsub": "^14.1.0",
     "@chainsafe/libp2p-noise": "^16.0.0",
