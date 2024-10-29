@@ -1,21 +1,29 @@
-import { createHelia, type Helia } from 'helia'
-import React, { createContext, useEffect, useState, type ReactNode } from 'react'
 
+import { type PubSub } from '@libp2p/interface'
+import { createHelia, type HeliaLibp2p } from 'helia'
+
+import { type Libp2p } from 'libp2p'
+import React, { createContext, useEffect, useState, type ReactNode } from 'react'
 interface HeliaContextProps {
-  helia: Helia | null
+  helia: HeliaLibp2p<Libp2p<{ pubsub: PubSub }>> | null
 }
 
-const HeliaContext = createContext<HeliaContextProps | undefined>(undefined)
 
-const HeliaProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [heliaInstance, setHeliaInstance] = useState<Helia | null>(null)
+const HeliaContext = createContext<HeliaContextProps | undefined>(undefined)
+const HeliaProvider: React.FC<{ children: ReactNode, libp2p?: Libp2p }> = ({ children, libp2p }) => {
+  const [heliaInstance, setHeliaInstance] = useState<HeliaLibp2p<Libp2p<{ pubsub: PubSub }>> | null>(null)
   useEffect(() => {
     void (async () => {
       if (heliaInstance != null) {
         return
       }
-      const helia = await createHelia()
-      setHeliaInstance(helia)
+      let helia
+      if (libp2p == null) {
+        helia = await createHelia()
+      } else {
+        helia = await createHelia({ libp2p })
+      }
+      setHeliaInstance(helia as HeliaLibp2p<Libp2p<{ pubsub: PubSub }>>)
     })()
 
     return () => {
@@ -41,12 +49,12 @@ const HeliaProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-const useHelia = (): Helia | null => {
+const useHelia = (): HeliaLibp2p<Libp2p<{ pubsub: PubSub }>> | null => {
   const context = React.useContext(HeliaContext)
   if (context === undefined) {
     throw new Error('useHelia must be used within a HeliaProvider')
   }
-  return context.helia
+  return context.helia as HeliaLibp2p<Libp2p<{ pubsub: PubSub }>>
 }
 
 export { HeliaProvider, useHelia }

@@ -1,5 +1,13 @@
 /** @type {import('aegir').PartialOptions} */
-const options = {
+export default {
+  dependencyCheck: {
+    ignore: [
+      // until https://github.com/ipfs/aegir/pull/1661 is merged:
+      '@testing-library/react',
+      'helia',
+      'p-defer'
+    ]
+  },
   build: {
     config: {
       loader: {
