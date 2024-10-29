@@ -52,19 +52,20 @@
     "prepublishOnly": "node scripts/update-version.js && npm run build"
   },
   "dependencies": {
-    "react": ">=18.0.0",
-    "react-dom": "^18.3.1",
     "@chainsafe/libp2p-gossipsub": "^14.1.0",
     "@chainsafe/libp2p-noise": "^16.0.0",
     "@chainsafe/libp2p-yamux": "^7.0.1",
     "@libp2p/circuit-relay-v2": "^3.0.0",
     "@libp2p/dcutr": "^2.0.9",
     "@libp2p/identify": "^3.0.9",
+    "@libp2p/interface": "^2.2.0",
     "@libp2p/webrtc": "^5.0.14",
     "@libp2p/websockets": "^9.0.9",
     "@multiformats/multiaddr": "^12.3.1",
     "@testing-library/jest-dom": "^6.6.2",
     "libp2p": "^2.1.10",
+    "react": ">=18.0.0",
+    "react-dom": "^18.3.1",
     "uint8arrays": "^5.1.0"
   },
   "devDependencies": {

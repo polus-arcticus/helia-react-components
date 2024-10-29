@@ -1,18 +1,22 @@
+import { type PeerId } from '@libp2p/interface'
 import { useEffect, useState, useCallback, useContext } from 'react'
 import { useHelia } from './helia-provider.js'
-
 const DEFAULT_OPTIONS = {
   pollInterval: 1000
 }
 
+interface Message {
+  topic: string
+  message: any
+}
 export const usePubsubRoom = ({
   topic = 'default',
   options = DEFAULT_OPTIONS
-} = {}): void => {
+} = {}): { peers: PeerId[], connections: any, messages: Message[] } => {
   const helia = useHelia()
-  const [peers, setPeers] = useState<string[]>([])
-  const [connections, setConnections] = useState<Object>({})
-  const [messages, setMessages] = useState<Object[]>([])
+  const [peers, setPeers] = useState<PeerId[]>([])
+  const [connections, setConnections] = useState<any>({})
+  const [messages, setMessages] = useState<Message[]>([])
 
 
   useEffect(() => {
@@ -32,7 +36,6 @@ export const usePubsubRoom = ({
         helia.libp2p.removeEventListener('self:peer:update', () => {})
         helia.libp2p.services.pubsub.removeEventListener('message', (event: any) => {})
       }
-
     }
   }, [helia])
 
@@ -43,5 +46,11 @@ export const usePubsubRoom = ({
       setPeers(peerList)
     }
   }, 500)
+
+  return {
+    peers,
+    connections,
+    messages
+  }
 
 }
